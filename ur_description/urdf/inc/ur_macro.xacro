@@ -127,12 +127,23 @@
           <color rgba="${upper_arm_visual_material_color}"/>
         </material>
       </visual>
-      <collision>
-        <origin xyz="0 0 ${shoulder_offset}" rpy="${pi/2} 0 ${-pi/2}"/>
-        <geometry>
-          <mesh filename="${upper_arm_collision_mesh}"/>
-        </geometry>
-      </collision>
+          <xacro:macro name="upper_arm_collision_loop" params="mesh_list">
+            <xacro:if value="${mesh_list}">
+              <!-- pop first item from list -->
+              <xacro:property name="mesh" value="${mesh_list.pop(0)}"/>
+
+              <collision>
+                <origin xyz="0 0 ${shoulder_offset}" rpy="${pi/2} 0 ${-pi/2}"/>
+                <geometry>
+                  <mesh filename="${mesh}"/>
+                </geometry>
+              </collision>
+
+              <!-- recursively call myself -->
+              <xacro:upper_arm_collision_loop mesh_list="${mesh_list}"/>
+            </xacro:if>
+          </xacro:macro>
+        <xacro:upper_arm_collision_loop mesh_list="${list(upper_arm_collision_mesh)}"/>
       <xacro:cylinder_inertial radius="${upperarm_inertia_radius}" length="${upperarm_inertia_length}" mass="${upper_arm_mass}">
         <origin xyz="${-0.5 * upperarm_inertia_length} 0.0 ${upper_arm_inertia_offset}" rpy="0 ${pi/2} 0" />
       </xacro:cylinder_inertial>
@@ -147,12 +158,23 @@
           <color rgba="${forearm_visual_material_color}"/>
         </material>
       </visual>
-      <collision>
-        <origin xyz="0 0 ${elbow_offset}" rpy="${pi/2} 0 ${-pi/2}"/>
-        <geometry>
-          <mesh filename="${forearm_collision_mesh}"/>
-        </geometry>
-      </collision>
+          <xacro:macro name="forearm_collision_loop" params="mesh_list">
+            <xacro:if value="${mesh_list}">
+              <!-- pop first item from list -->
+              <xacro:property name="mesh" value="${mesh_list.pop(0)}"/>
+
+              <collision>
+                <origin xyz="0 0 ${elbow_offset}" rpy="${pi/2} 0 ${-pi/2}"/>
+                <geometry>
+                  <mesh filename="${mesh}"/>
+                </geometry>
+              </collision>
+
+              <!-- recursively call myself -->
+              <xacro:forearm_collision_loop mesh_list="${mesh_list}"/>
+            </xacro:if>
+          </xacro:macro>
+        <xacro:forearm_collision_loop mesh_list="${list(forearm_collision_mesh)}"/>
       <xacro:cylinder_inertial radius="${forearm_inertia_radius}" length="${forearm_inertia_length}"  mass="${forearm_mass}">
         <origin xyz="${-0.5 * forearm_inertia_length} 0.0 ${elbow_offset}" rpy="0 ${pi/2} 0" />
       </xacro:cylinder_inertial>
