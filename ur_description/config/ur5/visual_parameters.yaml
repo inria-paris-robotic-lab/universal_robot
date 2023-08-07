@@ -24,8 +24,10 @@ mesh_files:
         name: "LightGrey"
         color: "0.7 0.7 0.7 1.0"
     collision:
-      mesh: "package://ur_description/meshes/ur5/collision/upperarm.stl"
-      mesh_files:
+      mesh:
+        - "package://ur_description/meshes/ur5/collision/upperarm_lower.stl"
+        - "package://ur_description/meshes/ur5/collision/upperarm_middle.stl"
+        - "package://ur_description/meshes/ur5/collision/upperarm_upper.stl"
 
   forearm:
     visual:
@@ -34,7 +36,10 @@ mesh_files:
         name: "LightGrey"
         color: "0.7 0.7 0.7 1.0"
     collision:
-      mesh: "package://ur_description/meshes/ur5/collision/forearm.stl"
+      mesh:
+        - "package://ur_description/meshes/ur5/collision/forearm_lower.stl"
+        - "package://ur_description/meshes/ur5/collision/forearm_middle.stl"
+        - "package://ur_description/meshes/ur5/collision/forearm_upper.stl"
 
   wrist_1:
     visual:
